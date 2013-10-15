@@ -1,0 +1,28 @@
+<h1>New product</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', products_path %>
+
+<script>
+	$(document).ready(function() {
+		$("#product_name").focusout(function(){
+          var name = $(this).val();
+          $.ajax({
+            url: '/products/product_check',
+            data : $("#new_product").serialize(),
+            method :"POST",
+            dataType :"script",
+            success: function(data) {
+                if (data == "false") {
+                    $("#product_name_error").html("Record Already Exist");
+                    $("#product_name").focus();
+                }
+                else {
+                    $("#product_name_error").html("Record Does Not Exist");
+                }
+            }
+        });
+		});
+	});
+</script>
